@@ -1,0 +1,11 @@
+.env
+.env*.local
+.git
+.next
+node_modules
+openspec
+.agents
+.claude
+supabase/.temp
+supabase/seed-fotos
+*.log

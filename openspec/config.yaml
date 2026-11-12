@@ -1,0 +1,55 @@
+schema: spec-driven
+
+context: |
+  Language: es
+  All artifacts must be written in es.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Proyecto: ecommerce de Abraxas, local de indumentaria femenina en Monte Grande
+  (Buenos Aires, Argentina). Instagram: @abraxas_monte_grande.
+
+  Objetivos:
+  - Las dueñas (no técnicas) cargan productos, fotos, talles, stock y precios
+    desde el celular en pocos pasos, sin tocar código.
+  - Fácil de adaptar: marca, colores, logo, textos y datos de contacto
+    centralizados en un único archivo de configuración + variables de tema.
+  - Mobile-first: la mayoría del tráfico llega desde Instagram en celular.
+
+  Stack:
+  - Next.js (App Router) + TypeScript estricto + Tailwind CSS + shadcn/ui.
+  - Supabase: Postgres, Auth (solo dueñas/admin), Storage (fotos de productos).
+  - Pagos: Mercado Pago Checkout Pro; alternativa transferencia y pedido por WhatsApp.
+  - Envíos: retiro en el local en Monte Grande, envío propio zona sur GBA,
+    envío nacional (Correo Argentino / Andreani) a cotizar.
+  - Deploy: Vercel. Gestor de paquetes: pnpm.
+
+  Localización: español rioplatense (voseo), moneda ARS, zona horaria
+  America/Argentina/Buenos_Aires, precios con IVA incluido.
+
+  Skills de dominio en .agents/skills: ecommerce-stack, catalogo-productos,
+  panel-admin-duenas, marca-y-tema, pagos-mercadopago, envios-argentina, seo-local.
+
+githubCopilot:
+  cloudAgent: false
+
+rules:
+  proposal:
+    - Indicar siempre qué queda fuera de alcance
+    - Explicar el impacto para las dueñas que administran la tienda
+  design:
+    - Priorizar soluciones simples y mantenibles por una sola persona
+    - Toda credencial va en variables de entorno, nunca en el código
+  tasks:
+    - Tareas chicas y verificables, agrupadas por capacidad
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
