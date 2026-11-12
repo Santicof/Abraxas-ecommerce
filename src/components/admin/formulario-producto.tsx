@@ -203,6 +203,13 @@ export function FormularioProducto({
 
   const totalUnidades = talles.reduce((s, t) => s + colores.reduce((s2, c) => s2 + stockDe(t, c), 0), 0);
 
+  const ultimoPaso = PASOS.length - 1;
+  const botonGuardar = (
+    <BotonGrande variante="marca" icono={Save} onClick={guardar} cargando={guardando} className="min-w-0 flex-1 px-4 whitespace-nowrap">
+      {editando ? "Guardar cambios" : "Guardar producto"}
+    </BotonGrande>
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
@@ -221,14 +228,14 @@ export function FormularioProducto({
         {PASOS.map((titulo, i) => {
           const habilitado = i <= visitado;
           return (
-            <li key={titulo}>
+            <li key={titulo} className="flex">
               <button
                 type="button"
                 disabled={!habilitado}
                 onClick={() => ir(i)}
                 aria-current={paso === i ? "step" : undefined}
                 className={cn(
-                  "flex w-full flex-col items-center gap-1 rounded-xl p-2 text-sm font-bold md:text-base",
+                  "flex w-full flex-col items-center justify-start gap-1 rounded-xl p-2 text-sm font-bold md:text-base",
                   paso === i ? "bg-primary text-primary-foreground" : habilitado ? "bg-background hover:bg-muted" : "bg-background/60 text-muted-foreground",
                 )}
               >
@@ -479,28 +486,22 @@ export function FormularioProducto({
 
       {/* Barra de acciones fija abajo, siempre a mano */}
       <div className="sticky bottom-[84px] z-30 -mx-4 border-t bg-background/95 p-4 backdrop-blur md:bottom-0 md:mx-0 md:rounded-2xl md:border">
-        <div className="flex gap-3">
-          {paso > 0 && (
-            <BotonGrande variante="suave" icono={ArrowLeft} onClick={() => ir(paso - 1)} className="flex-1 md:flex-none">
-              Volver
-            </BotonGrande>
-          )}
-          {paso < PASOS.length - 1 && (
-            <BotonGrande icono={ArrowRight} onClick={() => ir(paso + 1)} className="flex-[2] flex-row-reverse">
-              Siguiente
-            </BotonGrande>
-          )}
-          {(paso === PASOS.length - 1 || editando) && (
-            <BotonGrande
-              variante={paso === PASOS.length - 1 ? "marca" : "secundario"}
-              icono={Save}
-              onClick={guardar}
-              cargando={guardando}
-              className="flex-[2]"
-            >
-              {editando ? "Guardar cambios" : "Guardar producto"}
-            </BotonGrande>
-          )}
+        {/* En celular, si hay tres botones, "Guardar" pasa a su propia fila para no salirse de la pantalla. */}
+        <div className="flex flex-col gap-2 md:flex-row md:gap-3">
+          <div className="flex gap-2 md:contents">
+            {paso > 0 && (
+              <BotonGrande variante="suave" icono={ArrowLeft} onClick={() => ir(paso - 1)} className="flex-none px-4">
+                Volver
+              </BotonGrande>
+            )}
+            {paso < ultimoPaso && (
+              <BotonGrande icono={ArrowRight} onClick={() => ir(paso + 1)} className="min-w-0 flex-1 flex-row-reverse px-4">
+                Siguiente
+              </BotonGrande>
+            )}
+            {paso === ultimoPaso && botonGuardar}
+          </div>
+          {paso < ultimoPaso && editando && botonGuardar}
         </div>
       </div>
     </div>

@@ -94,19 +94,24 @@ function Tarjeta({
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-4 rounded-2xl border-2 bg-background p-5 transition hover:border-foreground",
+        "flex items-center gap-3 rounded-2xl border-2 bg-background p-4 transition hover:border-foreground sm:gap-4 sm:p-5",
         destacar && "border-foreground",
       )}
     >
-      <Icono className="size-9 shrink-0" />
+      <Icono className="size-8 shrink-0" />
       <span className="min-w-0 flex-1">
-        <span className="block text-xl font-bold">
-          {titulo}
-          {numero !== undefined && <span className={cn("ml-2 rounded-full px-2.5", destacar ? "bg-marca" : "bg-muted")}>{numero}</span>}
-        </span>
-        <span className="block text-base text-muted-foreground">{ayuda}</span>
+        <span className="block text-xl leading-snug font-bold">{titulo}</span>
+        <span className="block text-base leading-snug text-muted-foreground">{ayuda}</span>
       </span>
-      <ArrowRight className="size-6 shrink-0" />
+      {numero !== undefined ? (
+        <span
+          className={cn("flex size-12 shrink-0 items-center justify-center rounded-full text-xl font-bold", destacar ? "bg-marca" : "bg-muted")}
+        >
+          {numero}
+        </span>
+      ) : (
+        <ArrowRight className="size-6 shrink-0" />
+      )}
     </Link>
   );
 }

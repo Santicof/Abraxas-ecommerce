@@ -171,7 +171,7 @@ export function FormularioAjustes({ config, zonas, demo }: { config: Configuraci
       <Seccion titulo="Foto de portada" id="portada">
         <p className="text-base text-muted-foreground">Es la imagen grande que se ve al entrar a la tienda.</p>
         <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-2xl bg-muted">
-          <Image src={urlFoto(banner.imagen)} alt="Foto de portada" fill sizes="320px" className="object-cover" />
+          <Image src={urlFoto(banner.imagen)} alt="Foto de portada" fill sizes="320px" loading="eager" className="object-cover" />
         </div>
         <label className={cn("flex min-h-14 cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-foreground text-lg font-bold hover:bg-muted", subiendo && "opacity-50")}>
           <Camera className="size-6" /> {subiendo ? "Subiendo…" : "Cambiar foto"}
@@ -181,7 +181,14 @@ export function FormularioAjustes({ config, zonas, demo }: { config: Configuraci
           <input id="titulo" value={banner.titulo} onChange={(e) => setBanner({ ...banner, titulo: e.target.value })} className={claseEntrada(errores["banner.titulo"])} maxLength={80} />
         </Campo>
         <Campo id="subtitulo" etiqueta="Texto de abajo" ayuda="Una frase corta">
-          <input id="subtitulo" value={banner.subtitulo} onChange={(e) => setBanner({ ...banner, subtitulo: e.target.value })} className={claseEntrada()} maxLength={200} />
+          <textarea
+            id="subtitulo"
+            rows={3}
+            value={banner.subtitulo}
+            onChange={(e) => setBanner({ ...banner, subtitulo: e.target.value })}
+            className={cn(claseEntrada(), "h-auto py-3 leading-snug")}
+            maxLength={200}
+          />
         </Campo>
       </Seccion>
 

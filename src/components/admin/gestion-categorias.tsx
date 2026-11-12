@@ -12,7 +12,7 @@ import {
 } from "@/app/admin/acciones";
 import type { CategoriaAdmin } from "@/lib/admin/tipos";
 import { cn } from "@/lib/utils";
-import { BotonGrande, Campo, claseEntrada, Confirmar, SiNo } from "./ui";
+import { BotonGrande, Campo, claseEntrada, claseMosaico, Confirmar, SiNo } from "./ui";
 
 type R = { ok: boolean; mensaje?: string; error?: string };
 
@@ -108,11 +108,11 @@ export function GestionCategorias({ categorias }: { categorias: CategoriaAdmin[]
               <SiNo etiqueta={`¿${c.nombre} se ve?`} valor={c.activa} onCambio={(v) => correr(() => editarCategoriaAccion(c.id, { activa: v }))} />
             </div>
             {editando !== c.id && (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 <BotonGrande
                   variante="secundario"
                   icono={Pencil}
-                  className="text-base"
+                  className={claseMosaico}
                   onClick={() => {
                     setEditando(c.id);
                     setNombreEdit(c.nombre);
@@ -120,7 +120,7 @@ export function GestionCategorias({ categorias }: { categorias: CategoriaAdmin[]
                 >
                   Cambiar nombre
                 </BotonGrande>
-                <BotonGrande variante="peligro" icono={Trash2} className="text-base" onClick={() => setBorrar(c)}>
+                <BotonGrande variante="peligro" icono={Trash2} className={claseMosaico} onClick={() => setBorrar(c)}>
                   Borrar
                 </BotonGrande>
               </div>

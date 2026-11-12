@@ -47,6 +47,9 @@ export const BotonGrande = forwardRef<HTMLButtonElement, BotonProps>(function Bo
   );
 });
 
+/** Clases para botones en grilla de 2 columnas en celular: ícono arriba y texto en una línea. */
+export const claseMosaico = "min-h-16 flex-col gap-1 px-2 py-2 text-base leading-tight whitespace-nowrap";
+
 export function Campo({
   id,
   etiqueta,
@@ -113,7 +116,7 @@ export function SiNo({
           onClick={() => onCambio(v)}
           className={cn(
             "min-h-12 min-w-20 rounded-lg px-4 text-lg font-bold transition disabled:opacity-50",
-            valor === v ? (v ? "bg-primary text-primary-foreground" : "bg-muted-foreground text-white") : "text-foreground hover:bg-muted",
+            valor === v ? "bg-primary text-primary-foreground shadow-sm" : "text-foreground hover:bg-muted",
           )}
         >
           {v ? textoSi : textoNo}

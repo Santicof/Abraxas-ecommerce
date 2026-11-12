@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Copy, PackageOpen, Pencil, Plus, Search, Trash2 } from "lucide-react";
+import { Copy, EyeOff, PackageOpen, Pencil, Plus, Search, Trash2 } from "lucide-react";
 import { useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
 import {
@@ -18,7 +18,7 @@ import { stockTotalAdmin, type CategoriaAdmin, type ProductoAdmin } from "@/lib/
 import { formatearPrecio } from "@/lib/precio";
 import { urlFoto } from "@/lib/supabase/util";
 import { cn } from "@/lib/utils";
-import { BotonGrande, Campo, claseEntrada, Confirmar, Contador, leerPrecio, SiNo } from "./ui";
+import { BotonGrande, Campo, claseEntrada, claseMosaico, Confirmar, Contador, leerPrecio, SiNo } from "./ui";
 
 type Filtro = "todos" | "visibles" | "ocultos" | "sin-stock";
 const FILTROS: { valor: Filtro; texto: string }[] = [
@@ -79,7 +79,7 @@ export function ListaProductosAdmin({
             className={cn(claseEntrada(), "pl-12")}
           />
         </div>
-        <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Mostrar">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap" role="radiogroup" aria-label="Mostrar">
           {FILTROS.map((f) => (
             <button
               key={f.valor}
@@ -88,7 +88,7 @@ export function ListaProductosAdmin({
               aria-checked={filtro === f.valor}
               onClick={() => setFiltro(f.valor)}
               className={cn(
-                "min-h-12 rounded-full border-2 px-5 font-bold",
+                "min-h-12 rounded-full border-2 px-4 font-bold whitespace-nowrap",
                 filtro === f.valor ? "border-primary bg-primary text-primary-foreground" : "bg-background",
               )}
             >
@@ -155,7 +155,12 @@ function FilaProducto({ producto: p, categoria }: { producto: ProductoAdmin; cat
           <Image src={urlFoto(p.fotos[0]?.path)} alt={p.nombre} fill sizes="112px" className="object-cover" />
         </Link>
         <div className="min-w-0 flex-1 space-y-1">
-          <Link href={`/admin/productos/${p.id}`} className="block text-xl leading-snug font-bold hover:underline">
+          {!p.activo && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-3 py-0.5 text-sm font-bold text-muted-foreground">
+              <EyeOff className="size-4" /> Oculto
+            </span>
+          )}
+          <Link href={`/admin/productos/${p.id}`} className="block text-xl leading-snug font-bold break-words hover:underline">
             {p.nombre}
           </Link>
           <p className="text-base text-muted-foreground">{categoria}</p>
@@ -179,25 +184,25 @@ function FilaProducto({ producto: p, categoria }: { producto: ProductoAdmin; cat
         />
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-3">
+      <div className="mt-4 grid grid-cols-2 gap-2">
         <Link
           href={`/admin/productos/${p.id}`}
-          className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-primary text-lg font-bold text-primary-foreground"
+          className={cn("inline-flex items-center justify-center rounded-xl bg-primary font-bold text-primary-foreground", claseMosaico)}
         >
           <Pencil className="size-6" /> Editar
         </Link>
-        <BotonGrande variante="secundario" icono={PackageOpen} onClick={() => setStockAbierto(true)}>
+        <BotonGrande variante="secundario" icono={PackageOpen} className={claseMosaico} onClick={() => setStockAbierto(true)}>
           Stock y precio
         </BotonGrande>
         <BotonGrande
           variante="suave"
           icono={Copy}
-          className="text-base"
+          className={claseMosaico}
           onClick={() => correr(() => duplicarProductoAccion(p.id), (id) => id && router.push(`/admin/productos/${id}`))}
         >
           Hacer copia
         </BotonGrande>
-        <BotonGrande variante="peligro" icono={Trash2} className="text-base" onClick={() => setBorrar(true)}>
+        <BotonGrande variante="peligro" icono={Trash2} className={claseMosaico} onClick={() => setBorrar(true)}>
           Borrar
         </BotonGrande>
       </div>

@@ -99,8 +99,8 @@ export function FormularioLogin({ errorInicial }: { errorInicial?: string }) {
       </form>
       <div className="border-t pt-5 text-center">
         <p className="mb-3 text-base text-muted-foreground">¿Te olvidaste la contraseña?</p>
-        <BotonGrande variante="secundario" icono={Mail} onClick={enlace} disabled={pendiente} ancho>
-          Mandarme un enlace por email
+        <BotonGrande variante="secundario" icono={Mail} onClick={enlace} disabled={pendiente} ancho className="px-3 text-base">
+          Recibir un enlace por email
         </BotonGrande>
       </div>
     </div>
